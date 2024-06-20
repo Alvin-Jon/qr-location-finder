@@ -5,6 +5,7 @@
                 alert("Geolocation is not supported by this browser.")
             }
         }
+        let shareLink
 
         function showPosition(position) {
             const latitude =/* 5.518690*/position.coords.latitude
@@ -15,6 +16,7 @@
             document.getElementById("mapLink").style.display = "block"
             document.getElementById('share-btn').style.display = 'block'
             document.querySelector('.div').style.opacity = 1
+            shareLink = link
             // console.log(latitude, longitude)
             // Generate QR Code
             const qrCodeContainer = document.getElementById("qrCode")
@@ -46,12 +48,11 @@
 
 
         function shareLocation() {
-            const link = document.getElementById('share-btn').getAttribute('data-link')
             if (navigator.share) {
                 navigator.share({
                     title: 'My Location',
                     text: 'Here is my current location:',
-                    url: link,
+                    url: shareLink,
                 })
                 .then(() => console.log('Location shared successfully'))
                 .catch((error) => console.error('Error sharing location:', error))
