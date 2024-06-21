@@ -6,10 +6,10 @@
             }
         }
         let shareLink
-
-        function showPosition(position) {
-            const latitude =/* 5.518690*/position.coords.latitude
-            const longitude = /*5.737620*/position.coords.longitude
+ 
+        function showPosition (position) {
+            const latitude = position.coords.latitude
+            const longitude = position.coords.longitude
             const link = `https://www.google.com/maps?q=${latitude},${longitude}`
             document.getElementById("mapLink").href = link
             document.getElementById("mapLink").innerText = "View Location on Google Maps"
@@ -17,15 +17,10 @@
             document.getElementById('share-btn').style.display = 'block'
             document.querySelector('.div').style.opacity = 1
             shareLink = link
+            load(link)
             // console.log(latitude, longitude)
             // Generate QR Code
-            const qrCodeContainer = document.getElementById("qrCode")
-            qrCodeContainer.classList.add('canvas')
-            qrCodeContainer.innerHTML = "" // Clear any previous QR code
-            QRCode.toCanvas(qrCodeContainer, link, function (error) {
-                if (error) console.error(error)
-                //console.log('QR code generated!')
-            });
+    
         }
 
         function showError(error) {
@@ -45,18 +40,49 @@
             }
         }
 
-
-
-        function shareLocation() {
-            if (navigator.share) {
+        let shareLocation = async () =>  {
+       try{
+            if(navigator.share) {
                 navigator.share({
                     title: 'My Location',
                     text: 'Here is my current location:',
                     url: shareLink,
                 })
-                .then(() => console.log('Location shared successfully'))
-                .catch((error) => console.error('Error sharing location:', error))
-            } else {
+            }
+            else {
                 alert('Web Share API is not supported in your browser.')
+            }
+        }
+        catch{
+            alert('Web Share API is not supported in your browser.')
+        }
+        }
+
+        const load = async (link) => {
+            const qrCodeContainer = document.getElementById("qrCode");
+            const spinner = document.getElementById("spinner");
+        
+            qrCodeContainer.classList.add('canvas');
+            qrCodeContainer.innerHTML = ""; // Clear any previous QR code
+        
+            // Show the spinner
+            spinner.style.display = 'block';
+        
+            const ctx = qrCodeContainer.getContext('2d');
+            if (ctx) {
+                ctx.clearRect(0, 0, qrCodeContainer.width, qrCodeContainer.height);
+            }
+        
+            try {
+                await QRCode.toCanvas(qrCodeContainer, link, function (error) {
+                    if (error) console.error(error);
+                });
+            } catch (error) {
+                console.error(error);
+            } finally {
+                // Hide the spinner after QR code generation is complete
+                setTimeout(() => {
+                    spinner.style.display = 'none';
+                }, 400);
             }
         }
