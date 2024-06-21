@@ -6,6 +6,7 @@
             }
         }
         let shareLink
+       
  
         function showPosition (position) {
             const latitude = position.coords.latitude
@@ -19,7 +20,7 @@
             shareLink = link
             spinner.style.display = 'block';
             load(link)
-    
+            document.getElementById('btn').disabled = true
         }
 
         function showError(error) {
@@ -64,8 +65,6 @@
             qrCodeContainer.classList.add('canvas');
             qrCodeContainer.innerHTML = ""; // Clear any previous QR code
         
-            // Show the spinner
-        
             const ctx = qrCodeContainer.getContext('2d');
             if (ctx) {
                 ctx.clearRect(0, 0, qrCodeContainer.width, qrCodeContainer.height);
@@ -80,7 +79,8 @@
             } finally {
                 // Hide the spinner after QR code generation is complete
                 setTimeout(() => {
-                    spinner.style.display = 'none';
+                  spinner.style.display = 'none'
+                  document.getElementById('btn').disabled = false
                 }, 400);
             }
         }
