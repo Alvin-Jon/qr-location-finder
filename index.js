@@ -17,9 +17,8 @@
             document.getElementById('share-btn').style.display = 'block'
             document.querySelector('.div').style.opacity = 1
             shareLink = link
+            spinner.style.display = 'block';
             load(link)
-            // console.log(latitude, longitude)
-            // Generate QR Code
     
         }
 
@@ -66,7 +65,6 @@
             qrCodeContainer.innerHTML = ""; // Clear any previous QR code
         
             // Show the spinner
-            spinner.style.display = 'block';
         
             const ctx = qrCodeContainer.getContext('2d');
             if (ctx) {
