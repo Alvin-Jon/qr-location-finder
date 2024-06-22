@@ -6,7 +6,7 @@
                 document.querySelector('.div').style.opacity = 1
             } else {
                 alert("Geolocation is not supported by this browser.")
-                spinner.styel.display = 'none'
+                spinner.style.display = 'none'
             }
         }
         let shareLink
@@ -82,6 +82,6 @@
                 setTimeout(() => {
                   spinner.style.display = 'none'
                   document.getElementById('btn').disabled = false
-                }, 400);
+                }, 100);
             }
         }
