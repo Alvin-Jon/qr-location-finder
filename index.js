@@ -22,7 +22,7 @@
             shareLink = link
             load(link)
             document.getElementById('btn').disabled = true
-            alert('working')
+           
         }
 
         function showError(error) {
