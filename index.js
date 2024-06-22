@@ -1,8 +1,12 @@
         function generateQRCode() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition, showError)
+                spinner.style.display = 'block';
+                document.getElementById("mapLink").style.display = "block"
+                document.querySelector('.div').style.opacity = 1
             } else {
                 alert("Geolocation is not supported by this browser.")
+                spinner.styel.display = 'none'
             }
         }
         let shareLink
@@ -14,11 +18,8 @@
             const link = `https://www.google.com/maps?q=${latitude},${longitude}`
             document.getElementById("mapLink").href = link
             document.getElementById("mapLink").innerText = "View Location on Google Maps"
-            document.getElementById("mapLink").style.display = "block"
-            document.getElementById('share-btn').style.display = 'block'
-            document.querySelector('.div').style.opacity = 1
+             document.getElementById('share-btn').style.display = 'block'
             shareLink = link
-            spinner.style.display = 'block';
             load(link)
             document.getElementById('btn').disabled = true
         }
